@@ -1,0 +1,117 @@
+#mapa {
+  height: 640px;
+}
+
+h1 {
+  text-align: center;
+  margin: 0.666em 0 1em 0;
+}
+
+#menu {
+  font-size: 0.9em;
+  line-height: 1.3;
+  text-align: center;
+  min-height: 640px;
+}
+
+#menu .list-group-item {
+  width: 100%;
+}
+
+#menu .panel-title {
+  margin-bottom: 0;
+}
+
+#menu .panel-title a {
+  background-color: #e0e0e0;
+}
+
+#menu .panel-subtitle {
+  font-size: 1.2em;
+}
+
+#menu .panel-subtitle a {
+  background-color: #eaeaea;
+}
+
+#menu .panel-sub-subtitle {
+  background-color: #f4f4f4;
+}
+
+#detalles-contenedor {
+  text-align: center;
+  padding: 2em 1em 1em 1em;
+}
+
+#detalles {
+  margin-top: 2em;
+  text-align: left;
+}
+
+#navegacion-fija {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  margin: 1em;
+  font-size: 2em;
+  width: 1.5em;
+  height: 1.5em;
+  line-height: 0.55;
+  text-align: center;
+}
+
+#navegacion-fija a {
+  text-decoration: none;
+  width: 100%;
+  text-align: center;
+  display: block;
+}
+
+#navegacion-fija a, #navegacion-fija a:hover, #navegacion-fija a:visited, #navegacion-fija a:active {
+  color: black;
+}
+
+a.duracion, a.duracion:hover, a.duracion:active, a.duracion:visited, .respuesta-1-de-5, .respuesta-2-de-5, .respuesta-3-de-5, .respuesta-4-de-5, .respuesta-5-de-5 {
+  border-bottom: 1px dashed #808080;
+}
+
+.enunciado-pregunta {
+  text-decoration: underline;
+}
+
+.nav-tabs {
+    border-bottom: 0px solid #ddd;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+}
+
+.respuesta-si {
+  /*color: #00ff00;*/
+}
+
+.respuesta-no {
+  /*color: #ff0000;*/
+}
+
+.respuesta-1-de-5 {
+
+}
+
+.respuesta-2-de-5 {
+
+}
+
+.respuesta-3-de-5 {
+
+}
+
+.respuesta-4-de-5 {
+
+}
+
+.respuesta-5-de-5 {
+
+}
