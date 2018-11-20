@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta charset="utf-8" />
+    <title>TransQA</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="stylesheet" href="css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="css/transqa.css" />
+    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
   </head>
   <body>
 
@@ -50,7 +52,7 @@
                 <h5 class="modal-title" id="usuarioModalLabel">Usuarios</h5>
               </div>
               <div class="modal-body">
-                <div id="usuarios-list" ></div>
+                <div id="usuarios" ></div>
                 <ul class="pagination"></ul>
               </div>
               <div class="modal-footer">
@@ -69,6 +71,7 @@
               </div>
               <div class="modal-body">
                 <div id="rutas" ></div>
+                <ul class="pagination"></ul>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -133,7 +136,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/list.pagination.js/0.1.1/list.pagination.min.js"></script>
 
     <script type="text/javascript" src="js/papaparse.js"></script>
-    <script type="text/javascript" src="datos/transqa-app-export-2018-06-01.json"></script>
+    <!--<script type="text/javascript" src="datos/transqa-app-export-2018-06-01.json"></script>-->
+    <script type="text/javascript" src="js/connection.js"></script>
     <script type="text/javascript" src="js/transqa.js"></script>
     <script type="text/javascript" src="js/init.js"></script>
   </body>

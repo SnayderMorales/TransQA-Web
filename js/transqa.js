@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-var TransQA = (function(){
+var TransQA = (function () {
   "use strict";
 
   var FILTRO_TIMESTAMP_INICIO_RECORRIDOS = 1525755600 * 1000; // 2018/05/08 05:00:00 UTC; 00:00:00 GMT-5
@@ -73,8 +73,8 @@ var TransQA = (function(){
 
   var MILLA_INTERNACIONAL = 1.609344; // En kilómetros
 
-  var PUNTO_REFERENCIA_SOLO_CARRIL_1 = new google.maps.LatLng(10.42033,-75.55108); // Centro, Bodeguita
-  var PUNTO_REFERENCIA_SOLO_CARRIL_2 = new google.maps.LatLng(10.397383,-75.472797); // Salida de estación Transcaribe
+  var PUNTO_REFERENCIA_SOLO_CARRIL_1 = new google.maps.LatLng(10.42033, -75.55108); // Centro, Bodeguita
+  var PUNTO_REFERENCIA_SOLO_CARRIL_2 = new google.maps.LatLng(10.397383, -75.472797); // Salida de estación Transcaribe
   var DISTANCIA_COMPARACION_PUNTO_REFERENCIA = 50; // Metros
 
   var COLORES = [
@@ -108,7 +108,7 @@ var TransQA = (function(){
   var elementoTodoTitulo = document.getElementById("todo-titulo");
 
   var elementoTodo = document.getElementById("todo");
-  var elementoUsuarios = document.getElementById("usuarios-list");
+  var elementoUsuarios = document.getElementById("usuarios");
   var elementoRutas = document.getElementById("rutas");
   var elementoRecorridos = document.getElementById("recorridos");
 
@@ -126,7 +126,7 @@ var TransQA = (function(){
   var csvRutas;
   var datos;
 
-  var rellenarEnteroConCeros = function(entero, lugaresDecimales) {
+  var rellenarEnteroConCeros = function (entero, lugaresDecimales) {
     let enteroString = String(entero);
 
     while (enteroString.length < lugaresDecimales) {
@@ -136,18 +136,18 @@ var TransQA = (function(){
     return enteroString;
   };
 
-  var fechaAString = function(fecha) {
+  var fechaAString = function (fecha) {
     //return fecha.toISOString().replace(/(.*)T(.*)\..*/, '$1 $2');
-	  return `${ rellenarEnteroConCeros(fecha.getFullYear(), 4) }-${ rellenarEnteroConCeros(fecha.getMonth() + 1, 2) }-${ rellenarEnteroConCeros(fecha.getDate(), 2) } ${ rellenarEnteroConCeros(fecha.getHours(), 2) }:${ rellenarEnteroConCeros(fecha.getMinutes(), 2) }:${ rellenarEnteroConCeros(fecha.getSeconds(), 2) }`;
+    return `${rellenarEnteroConCeros(fecha.getFullYear(), 4)}-${rellenarEnteroConCeros(fecha.getMonth() + 1, 2)}-${rellenarEnteroConCeros(fecha.getDate(), 2)} ${rellenarEnteroConCeros(fecha.getHours(), 2)}:${rellenarEnteroConCeros(fecha.getMinutes(), 2)}:${rellenarEnteroConCeros(fecha.getSeconds(), 2)}`;
   };
 
-  var floatAString = function(valor, lugaresDecimales) {
+  var floatAString = function (valor, lugaresDecimales) {
     // Redondea al convertir float a string.
     // https://stackoverflow.com/a/32178833
-    return Number(Math.round(valor+'e2')+'e-2').toFixed(lugaresDecimales);
+    return Number(Math.round(valor + 'e2') + 'e-2').toFixed(lugaresDecimales);
   };
 
-  var convertirCoordenadasACoordenadasGoogleMaps = function(coordenadasTransQA) {
+  var convertirCoordenadasACoordenadasGoogleMaps = function (coordenadasTransQA) {
     var coordenadas = [];
     var i;
 
@@ -161,7 +161,7 @@ var TransQA = (function(){
     return coordenadas;
   };
 
-  var mostrarRecorrido = function(id, limpiarMapa, color) {
+  var mostrarRecorrido = function (id, limpiarMapa, color) {
     var recorrido = datos.recorridos[id];
     var coordenadas;
     var polyline;
@@ -190,19 +190,19 @@ var TransQA = (function(){
     polyline.setMap(mapa);
 
     stringMarcadores =
-    '-- Email: ' + recorrido.email + '\n' +
-    '-- Usuario: ' + recorrido.usuario.id + '\n' +
-    '-- ID de Recorrido: ' + recorrido.id + '\n' +
-    '-- Ruta: ' + recorrido.vehiculo + '\n' +
-    '-- Datos de primera y última milla: ' + ((recorrido.primeraMilla != null && recorrido.ultimaMilla != null) ? 'Disponible' : 'No disponible') + '\n' +
-    '-- Datos dentro de solo carril: ' + (recorrido.soloCarril != null ? 'Disponible' : 'No disponible') + '\n' +
-    '-- Velocidad: ' + floatAString(recorrido.velocidadMedia, 3) + ' km/h\n' +
-    '-- Distancia recorrida: ' + floatAString(recorrido.distanciaRecorrida, 3) + 'km\n' +
-    '-- Desplazamiento: ' + floatAString(recorrido.desplazamiento, 3) + 'km\n' +
-    '-- Número de puntos capturados: ' + recorrido.puntos.length + '\n' +
-    '-- Duración: ' + rellenarEnteroConCeros(recorrido.duracion.horas, 2) + ' horas, ' + rellenarEnteroConCeros(recorrido.duracion.minutos, 2) + ' minutos, ' + rellenarEnteroConCeros(recorrido.duracion.segundos, 2) + ' segundos\n' +
-    '-- Fecha inicio: ' + fechaAString(recorrido.fechaInicio) + '\n' +
-    '-- Fecha fin: ' + fechaAString(recorrido.fechaFin);
+      '-- Email: ' + recorrido.email + '\n' +
+      '-- Usuario: ' + recorrido.usuario.id + '\n' +
+      '-- ID de Recorrido: ' + recorrido.id + '\n' +
+      '-- Ruta: ' + recorrido.vehiculo + '\n' +
+      '-- Datos de primera y última milla: ' + ((recorrido.primeraMilla != null && recorrido.ultimaMilla != null) ? 'Disponible' : 'No disponible') + '\n' +
+      '-- Datos dentro de solo carril: ' + (recorrido.soloCarril != null ? 'Disponible' : 'No disponible') + '\n' +
+      '-- Velocidad: ' + floatAString(recorrido.velocidadMedia, 3) + ' km/h\n' +
+      '-- Distancia recorrida: ' + floatAString(recorrido.distanciaRecorrida, 3) + 'km\n' +
+      '-- Desplazamiento: ' + floatAString(recorrido.desplazamiento, 3) + 'km\n' +
+      '-- Número de puntos capturados: ' + recorrido.puntos.length + '\n' +
+      '-- Duración: ' + rellenarEnteroConCeros(recorrido.duracion.horas, 2) + ' horas, ' + rellenarEnteroConCeros(recorrido.duracion.minutos, 2) + ' minutos, ' + rellenarEnteroConCeros(recorrido.duracion.segundos, 2) + ' segundos\n' +
+      '-- Fecha inicio: ' + fechaAString(recorrido.fechaInicio) + '\n' +
+      '-- Fecha fin: ' + fechaAString(recorrido.fechaFin);
 
     marcadores.push(new google.maps.Marker({
       position: coordenadas[coordenadas.length - 1],
@@ -217,16 +217,16 @@ var TransQA = (function(){
     }));
 
     // https://stackoverflow.com/a/5113169
-    google.maps.event.addListener(polyline, 'mouseover', function() {
+    google.maps.event.addListener(polyline, 'mouseover', function () {
       window.console.log("RECORRIDO:\n" + stringMarcadores);
     });
 
-    google.maps.event.addListener(polyline, 'mouseout', function() {
-        // No usado.
+    google.maps.event.addListener(polyline, 'mouseout', function () {
+      // No usado.
     });
   };
 
-  var mostrarUsuario = function(id) {
+  var mostrarUsuario = function (id) {
     var color = 0;
     var i;
 
@@ -238,7 +238,7 @@ var TransQA = (function(){
     }
   };
 
-  var mostrarRuta = function(id) {
+  var mostrarRuta = function (id) {
     var color = 0;
     var i;
 
@@ -250,7 +250,7 @@ var TransQA = (function(){
     }
   };
 
-  var mostrarTodo = function() {
+  var mostrarTodo = function () {
     var color = 0;
     var i;
 
@@ -262,7 +262,7 @@ var TransQA = (function(){
     }
   };
 
-  var crearMapa = function() {
+  var crearMapa = function () {
     marcadores = [];
     polylines = [];
 
@@ -272,7 +272,7 @@ var TransQA = (function(){
     });
   };
 
-  var vaciarMapa = function() {
+  var vaciarMapa = function () {
     var i;
 
     mapa.setZoom(ZOOM_MAPA);
@@ -290,7 +290,7 @@ var TransQA = (function(){
     polylines = [];
   };
 
-  var migrarRutasAnteriores = function() {
+  var migrarRutasAnteriores = function () {
     var i;
 
     for (i in datos.rutas) {
@@ -330,7 +330,7 @@ var TransQA = (function(){
     }
   };
 
-  var diferenciaTimestamps = function(timestampInicio, timestampFin) {
+  var diferenciaTimestamps = function (timestampInicio, timestampFin) {
     var d = timestampFin - timestampInicio;
 
     var h = Math.floor(d / 3600000);
@@ -344,7 +344,7 @@ var TransQA = (function(){
     };
   };
 
-  var analizarRecorrido = function(recorrido, recorridoJSON, idUsuario, idRecorrido) {
+  var analizarRecorrido = function (recorrido, recorridoJSON, idUsuario, idRecorrido) {
     // Los IDs de usuario y recorrido están aquí sólo por depuración actualmente
 
     // Aquí distanciaTotal es usado por verificación;
@@ -574,7 +574,7 @@ var TransQA = (function(){
     recorrido.soloCarril = soloCarril;
   };
 
-  var filtrarRecorrido = function(idRecorrido, recorridoJSON) {
+  var filtrarRecorrido = function (idRecorrido, recorridoJSON) {
     var tempFecha;
 
     if (recorridoJSON.puntos === undefined || recorridoJSON.puntos.length == 0) {
@@ -607,7 +607,7 @@ var TransQA = (function(){
     return true;
   };
 
-  var leerDatos = function() {
+  var leerDatos = function (_JSON) {
     var j; // ID usuario de Google. _JSON[j] = Listado de recorridos de usuario.
     var k; // ID de recorrido. _JSON[j][k] = Recorrido individual de un usuario.
     var l; // Índice de coordenada. _JSON[j][k].puntos[l] es una coordenada.
@@ -977,11 +977,11 @@ var TransQA = (function(){
     _csvRutas = null;
   };
 
-  var arreglarExpandirColapsar = function(elemento) {
+  var arreglarExpandirColapsar = function (elemento) {
     elemento.classList.toggle("show");
   };
 
-  var crearElementoRecorrido = function(id, elementoPadre, mostrarRuta, mostrarUsuario) {
+  var crearElementoRecorrido = function (id, elementoPadre, mostrarRuta, mostrarUsuario) {
     var elemento = document.createElement('a');
 
     elemento.href = "#";
@@ -998,7 +998,7 @@ var TransQA = (function(){
 
     elemento.innerHTML += "<strong>Inicio:</strong> " + fechaAString(datos.recorridos[id].fechaInicio) + "<br /><strong>Fin:</strong> " + fechaAString(datos.recorridos[id].fechaFin);
 
-    elemento.addEventListener("click", function(e) {
+    elemento.addEventListener("click", function (e) {
       mostrarRecorrido(id, true);
       mostrarDetallesRecorrido(id);
 
@@ -1008,20 +1008,20 @@ var TransQA = (function(){
     elementoPadre.appendChild(elemento);
   };
 
-  var crearElementoRuta = function(id) {
+  var crearElementoRuta = function (id) {
     var i;
 
     var elementoTitulo = document.createElement("h3");
-    elementoTitulo.className = "panel-title panel-subtitle";
+    elementoTitulo.className = "list panel-title panel-subtitle";
 
     var elementoEnlaceTitulo = document.createElement("a");
     elementoEnlaceTitulo.href = "#";
-    elementoEnlaceTitulo.className = "list-group-item list-group-item-action";
+    elementoEnlaceTitulo.className = "list-group-item list-group-item-action name";
     elementoEnlaceTitulo.dataset.toggle = "collapse";
     elementoEnlaceTitulo.dataset.target = "#ruta" + id;
     elementoEnlaceTitulo.dataset.parent = "#rutas";
     elementoEnlaceTitulo.textContent = datos.rutas[id].nombre + " (" + Object.keys(datos.rutas[id].recorridos).length + ")";
-    elementoEnlaceTitulo.addEventListener("click", function(e) {
+    elementoEnlaceTitulo.addEventListener("click", function (e) {
       e.preventDefault();
     });
 
@@ -1035,7 +1035,7 @@ var TransQA = (function(){
     elementoTodoRuta.className = "list-group-item list-group-item-action panel-sub-subtitle";
     elementoTodoRuta.textContent = "Todo";
 
-    elementoTodoRuta.addEventListener("click", function(e) {
+    elementoTodoRuta.addEventListener("click", function (e) {
       mostrarRuta(id);
       mostrarDetallesRuta(id);
 
@@ -1048,7 +1048,7 @@ var TransQA = (function(){
       crearElementoRecorrido(i, elementoContenedorRutas, false, true);
     }
 
-    elementoTitulo.addEventListener("click", function(e){
+    elementoTitulo.addEventListener("click", function (e) {
       arreglarExpandirColapsar(elementoContenedorRutas);
 
       e.preventDefault();
@@ -1059,7 +1059,7 @@ var TransQA = (function(){
     elementoRutas.appendChild(elementoContenedorRutas);
   };
 
-  var crearElementoUsuario = function(id) {
+  var crearElementoUsuario = function (id) {
     var i;
 
     var elementoTitulo = document.createElement("h3");
@@ -1072,7 +1072,7 @@ var TransQA = (function(){
     elementoEnlaceTitulo.dataset.target = "#usuario" + id;
     elementoEnlaceTitulo.dataset.parent = "#usuarios";
     elementoEnlaceTitulo.textContent = datos.usuarios[id].email + " (" + Object.keys(datos.usuarios[id].recorridos).length + ")";
-    elementoEnlaceTitulo.addEventListener("click", function(e){
+    elementoEnlaceTitulo.addEventListener("click", function (e) {
       e.preventDefault();
     });
 
@@ -1086,7 +1086,7 @@ var TransQA = (function(){
     elementoTodoUsuario.className = "list-group-item list-group-item-action panel-sub-subtitle";
     elementoTodoUsuario.textContent = "Todo";
 
-    elementoTodoUsuario.addEventListener("click", function(e) {
+    elementoTodoUsuario.addEventListener("click", function (e) {
       mostrarUsuario(id);
       mostrarDetallesUsuario(id);
 
@@ -1099,7 +1099,7 @@ var TransQA = (function(){
       crearElementoRecorrido(i, elementoContenedorRecorridos, true, false);
     }
 
-    elementoTitulo.addEventListener("click", function(e){
+    elementoTitulo.addEventListener("click", function (e) {
       arreglarExpandirColapsar(elementoContenedorRecorridos);
 
       e.preventDefault();
@@ -1111,7 +1111,7 @@ var TransQA = (function(){
   };
 
   // Para versiones del cuestionario anteriores sin un campo "version"
-  var crearHTMLCuestionarioAnterior = function(id) {
+  var crearHTMLCuestionarioAnterior = function (id) {
     var cuestionario = datos.recorridos[id].cuestionario;
     var i;
     var j;
@@ -1186,10 +1186,10 @@ var TransQA = (function(){
         htmlObservaciones = "";
 
         if (cuestionario.preguntas[i].respuesta.hasOwnProperty("observaciones") && (observaciones = cuestionario.preguntas[i].respuesta.observaciones) != null && (observaciones = observaciones.trim()) != "") {
-          htmlObservaciones = `<ul><li><strong>Observaciones adicionales</strong>: ${ observaciones }</li></ul>`;
+          htmlObservaciones = `<ul><li><strong>Observaciones adicionales</strong>: ${observaciones}</li></ul>`;
         }
 
-        htmlPreguntas += `<li><span class="enunciado-pregunta">${ enunciado }</span> <span class="${ respuesta ? "respuesta-si" : "respuesta-no" }">${ respuesta ? "Sí" : "No" }</span>${htmlObservaciones}</li>`;
+        htmlPreguntas += `<li><span class="enunciado-pregunta">${enunciado}</span> <span class="${respuesta ? "respuesta-si" : "respuesta-no"}">${respuesta ? "Sí" : "No"}</span>${htmlObservaciones}</li>`;
       }
     } else {
       for (i in cuestionario.preguntas) {
@@ -1198,10 +1198,10 @@ var TransQA = (function(){
 
         switch (cuestionario.preguntas[i].tipoPregunta) {
           case "VerdaderoFalso":
-            htmlRespuesta = `<span class="${ respuesta ? "respuesta-si" : "respuesta-no" }">${ respuesta ? "Sí" : "No" }</span>`;
+            htmlRespuesta = `<span class="${respuesta ? "respuesta-si" : "respuesta-no"}">${respuesta ? "Sí" : "No"}</span>`;
             break;
           case "Cuantitativa":
-            descripcionesRespuestaCuantitativa = `Respuesta: ${ respuesta + 1 } de ${ cuestionario.preguntas[i].valorMaximo + 1 }\n\nOpciones:\n`;
+            descripcionesRespuestaCuantitativa = `Respuesta: ${respuesta + 1} de ${cuestionario.preguntas[i].valorMaximo + 1}\n\nOpciones:\n`;
 
             for (j in cuestionario.preguntas[i].descripcionesDeOpciones) {
               descripcionesRespuestaCuantitativa += (parseInt(j) + 1) + " = " + cuestionario.preguntas[i].descripcionesDeOpciones[j];
@@ -1211,7 +1211,7 @@ var TransQA = (function(){
               }
             }
 
-            htmlRespuesta = `<span class="respuesta-${ respuesta + 1 }-de-5" title="${ descripcionesRespuestaCuantitativa }">${ cuestionario.preguntas[i].descripcionesDeOpciones[respuesta] }</span>`;
+            htmlRespuesta = `<span class="respuesta-${respuesta + 1}-de-5" title="${descripcionesRespuestaCuantitativa}">${cuestionario.preguntas[i].descripcionesDeOpciones[respuesta]}</span>`;
             break;
           default:
             htmlRespuesta = "Respuesta desconocida.";
@@ -1221,26 +1221,26 @@ var TransQA = (function(){
         htmlObservaciones = "";
 
         if (cuestionario.preguntas[i].respuesta.hasOwnProperty("observaciones") && (observaciones = cuestionario.preguntas[i].respuesta.observaciones) != null && (observaciones = observaciones.trim()) != "") {
-          htmlObservaciones = `<ul><li><strong>Observaciones adicionales</strong>: ${ observaciones }</li></ul>`;
+          htmlObservaciones = `<ul><li><strong>Observaciones adicionales</strong>: ${observaciones}</li></ul>`;
         }
 
-        htmlPreguntas += `<li><span class="enunciado-pregunta">${ enunciado }</span> ${ htmlRespuesta }${ htmlObservaciones }</li>`;
+        htmlPreguntas += `<li><span class="enunciado-pregunta">${enunciado}</span> ${htmlRespuesta}${htmlObservaciones}</li>`;
       }
     }
 
     htmlPreguntas += "</ul>";
 
     var htmlCuestionario = `<ul>
-      <li><strong>Tipo de cuestionario</strong>: ${ tipo }</li>
-      <li><strong>Versión de cuestionario</strong>: ${ version }</li>
-      <li><strong>Preguntas</strong>: ${ htmlPreguntas }</li>
-      <li><strong>Observaciones generales adicionales</strong>: ${ observacionesCuestionario }</li>
+      <li><strong>Tipo de cuestionario</strong>: ${ tipo}</li>
+      <li><strong>Versión de cuestionario</strong>: ${ version}</li>
+      <li><strong>Preguntas</strong>: ${ htmlPreguntas}</li>
+      <li><strong>Observaciones generales adicionales</strong>: ${ observacionesCuestionario}</li>
     </ul>`;
 
     return htmlCuestionario;
   };
 
-  var crearHTMLCuestionario = function(id) {
+  var crearHTMLCuestionario = function (id) {
     var cuestionario = datos.recorridos[id].cuestionario;
 
     if (!cuestionario.hasOwnProperty("version") || cuestionario.version == null || cuestionario.version < 4) {
@@ -1256,22 +1256,22 @@ var TransQA = (function(){
     return htmlCuestionario;
   };
 
-  var mostrarDetallesRecorrido = function(id) {
+  var mostrarDetallesRecorrido = function (id) {
     var htmlDetalles = `<ul>
       <li><strong>Usuario</strong>: <ul>
-        <li><strong>Email</strong>: ${ datos.recorridos[id].email }</li>
-        <li><strong>ID</strong>: ${ datos.recorridos[id].usuario.id }</li>
+        <li><strong>Email</strong>: ${ datos.recorridos[id].email}</li>
+        <li><strong>ID</strong>: ${ datos.recorridos[id].usuario.id}</li>
       </ul></li>
       <li><strong>Recorrido</strong>: <ul>
-        <li><strong>ID</strong>: ${ id }</li>
-        <li><strong>Ruta</strong>: ${ datos.recorridos[id].ruta.nombre }</li>
-        <li><strong>Velocidad Media</strong>: ${ floatAString(datos.recorridos[id].velocidadMedia, 3) } km/h</li>
-        <li><strong>Distancia Recorrida</strong>: ${ floatAString(datos.recorridos[id].distanciaRecorrida, 3) } km</li>
-        <li><strong>Desplazamiento</strong>: ${ floatAString(datos.recorridos[id].desplazamiento, 3) } km</li>
-        <li><strong>Número de puntos capturados</strong>: ${ datos.recorridos[id].puntos.length }</li>
-        <li><strong>Duración</strong>: <a title="${ datos.recorridos[id]._fechaFin - datos.recorridos[id]._fechaInicio } milisegundos" class="duracion">${ datos.recorridos[id].duracion.horas + ' horas, ' + datos.recorridos[id].duracion.minutos + ' minutos, ' + datos.recorridos[id].duracion.segundos } segundos</a></li>
-        <li><strong>Fecha Inicio</strong>: ${ fechaAString(datos.recorridos[id].fechaInicio) }</li>
-        <li><strong>Fecha Fin</strong>: ${ fechaAString(datos.recorridos[id].fechaFin) }</li>`;
+        <li><strong>ID</strong>: ${ id}</li>
+        <li><strong>Ruta</strong>: ${ datos.recorridos[id].ruta.nombre}</li>
+        <li><strong>Velocidad Media</strong>: ${ floatAString(datos.recorridos[id].velocidadMedia, 3)} km/h</li>
+        <li><strong>Distancia Recorrida</strong>: ${ floatAString(datos.recorridos[id].distanciaRecorrida, 3)} km</li>
+        <li><strong>Desplazamiento</strong>: ${ floatAString(datos.recorridos[id].desplazamiento, 3)} km</li>
+        <li><strong>Número de puntos capturados</strong>: ${ datos.recorridos[id].puntos.length}</li>
+        <li><strong>Duración</strong>: <a title="${ datos.recorridos[id]._fechaFin - datos.recorridos[id]._fechaInicio} milisegundos" class="duracion">${datos.recorridos[id].duracion.horas + ' horas, ' + datos.recorridos[id].duracion.minutos + ' minutos, ' + datos.recorridos[id].duracion.segundos} segundos</a></li>
+        <li><strong>Fecha Inicio</strong>: ${ fechaAString(datos.recorridos[id].fechaInicio)}</li>
+        <li><strong>Fecha Fin</strong>: ${ fechaAString(datos.recorridos[id].fechaFin)}</li>`;
 
     var htmlPrimeraMilla = "<li><strong>Datos de primera milla</strong>: ";
     var htmlUltimaMilla = "<li><strong>Datos de última milla</strong>: ";
@@ -1280,14 +1280,14 @@ var TransQA = (function(){
       htmlUltimaMilla += "no disponible";
     } else {
       htmlPrimeraMilla += `<ul>
-        <li><strong>Duración</strong>: <a title="${ Math.floor(datos.recorridos[id].primeraMilla._duracion) } milisegundos" class="duracion">${ datos.recorridos[id].primeraMilla.duracion.horas + ' horas, ' + datos.recorridos[id].primeraMilla.duracion.minutos + ' minutos, ' + datos.recorridos[id].primeraMilla.duracion.segundos } segundos</a></li>
-        <li><strong>Distancia Recorrida</strong>: ${ floatAString(datos.recorridos[id].primeraMilla.distancia, 3) } km</li>
-        <li><strong>Velocidad Media</strong>: ${ floatAString(datos.recorridos[id].primeraMilla.velocidadMedia, 3) } km/h</li>
+        <li><strong>Duración</strong>: <a title="${ Math.floor(datos.recorridos[id].primeraMilla._duracion)} milisegundos" class="duracion">${datos.recorridos[id].primeraMilla.duracion.horas + ' horas, ' + datos.recorridos[id].primeraMilla.duracion.minutos + ' minutos, ' + datos.recorridos[id].primeraMilla.duracion.segundos} segundos</a></li>
+        <li><strong>Distancia Recorrida</strong>: ${ floatAString(datos.recorridos[id].primeraMilla.distancia, 3)} km</li>
+        <li><strong>Velocidad Media</strong>: ${ floatAString(datos.recorridos[id].primeraMilla.velocidadMedia, 3)} km/h</li>
       </ul>`;
       htmlUltimaMilla += `<ul>
-        <li><strong>Duración</strong>: <a title="${ Math.floor(datos.recorridos[id].ultimaMilla._duracion) } milisegundos" class="duracion">${ datos.recorridos[id].ultimaMilla.duracion.horas + ' horas, ' + datos.recorridos[id].ultimaMilla.duracion.minutos + ' minutos, ' + datos.recorridos[id].ultimaMilla.duracion.segundos } segundos</a></li>
-        <li><strong>Distancia Recorrida</strong>: ${ floatAString(datos.recorridos[id].ultimaMilla.distancia, 3) } km</li>
-        <li><strong>Velocidad Media</strong>: ${ floatAString(datos.recorridos[id].ultimaMilla.velocidadMedia, 3) } km/h</li>
+        <li><strong>Duración</strong>: <a title="${ Math.floor(datos.recorridos[id].ultimaMilla._duracion)} milisegundos" class="duracion">${datos.recorridos[id].ultimaMilla.duracion.horas + ' horas, ' + datos.recorridos[id].ultimaMilla.duracion.minutos + ' minutos, ' + datos.recorridos[id].ultimaMilla.duracion.segundos} segundos</a></li>
+        <li><strong>Distancia Recorrida</strong>: ${ floatAString(datos.recorridos[id].ultimaMilla.distancia, 3)} km</li>
+        <li><strong>Velocidad Media</strong>: ${ floatAString(datos.recorridos[id].ultimaMilla.velocidadMedia, 3)} km/h</li>
       </ul>`;
     }
     htmlDetalles += htmlPrimeraMilla + "</li>" + htmlUltimaMilla + "</li>";
@@ -1297,10 +1297,10 @@ var TransQA = (function(){
       htmlSoloCarril += "no disponible";
     } else {
       htmlSoloCarril += `<ul>
-        <li><strong>Duración</strong>: <a title="${ datos.recorridos[id].soloCarril._duracion } milisegundos" class="duracion">${ datos.recorridos[id].soloCarril.duracion.horas + ' horas, ' + datos.recorridos[id].soloCarril.duracion.minutos + ' minutos, ' + datos.recorridos[id].soloCarril.duracion.segundos } segundos</a></li>
-        <li><strong>Desplazamiento</strong>: ${ floatAString(datos.recorridos[id].soloCarril.desplazamiento, 3) } km</li>
-        <li><strong>Distancia Recorrida</strong>: ${ floatAString(datos.recorridos[id].soloCarril.distanciaRecorrida, 3) } km</li>
-        <li><strong>Velocidad Media</strong>: ${ floatAString(datos.recorridos[id].soloCarril.velocidadMedia, 3) } km/h</li>
+        <li><strong>Duración</strong>: <a title="${ datos.recorridos[id].soloCarril._duracion} milisegundos" class="duracion">${datos.recorridos[id].soloCarril.duracion.horas + ' horas, ' + datos.recorridos[id].soloCarril.duracion.minutos + ' minutos, ' + datos.recorridos[id].soloCarril.duracion.segundos} segundos</a></li>
+        <li><strong>Desplazamiento</strong>: ${ floatAString(datos.recorridos[id].soloCarril.desplazamiento, 3)} km</li>
+        <li><strong>Distancia Recorrida</strong>: ${ floatAString(datos.recorridos[id].soloCarril.distanciaRecorrida, 3)} km</li>
+        <li><strong>Velocidad Media</strong>: ${ floatAString(datos.recorridos[id].soloCarril.velocidadMedia, 3)} km/h</li>
       </ul>`;
     }
     htmlDetalles += htmlSoloCarril + "</li>";
@@ -1321,7 +1321,7 @@ var TransQA = (function(){
     elementoDetalles.innerHTML = htmlDetalles;
   };
 
-  var mostrarDetallesUsuario = function(id) {
+  var mostrarDetallesUsuario = function (id) {
     var rutasNombres = [];
     var rutasTotales = [];
     var i;
@@ -1388,19 +1388,19 @@ var TransQA = (function(){
     }
 
     var htmlDetalles = `<ul>
-      <li><strong>Email</strong>: ${ datos.usuarios[id].email }</li>
-      <li><strong>ID</strong>: ${ id }</li>
-      <li><strong>Número de recorridos</strong>: ${ Object.keys(datos.usuarios[id].recorridos).length }</li>
-      <li><strong>Rutas transitadas</strong>: ${ htmlRutas }</li>
-      <li><strong>Fecha primer recorrido</strong>: ${ htmlPrimeraFecha }</li>
-      <li><strong>Fecha recorrido más reciente</strong>: ${ htmlUltimaFecha }</li>
+      <li><strong>Email</strong>: ${ datos.usuarios[id].email}</li>
+      <li><strong>ID</strong>: ${ id}</li>
+      <li><strong>Número de recorridos</strong>: ${ Object.keys(datos.usuarios[id].recorridos).length}</li>
+      <li><strong>Rutas transitadas</strong>: ${ htmlRutas}</li>
+      <li><strong>Fecha primer recorrido</strong>: ${ htmlPrimeraFecha}</li>
+      <li><strong>Fecha recorrido más reciente</strong>: ${ htmlUltimaFecha}</li>
     </ul>`;
 
     elementoTituloDetalles.textContent = "Detalles: Usuario";
     elementoDetalles.innerHTML = htmlDetalles;
   };
 
-  var mostrarDetallesRuta = function(id) {
+  var mostrarDetallesRuta = function (id) {
     var numeroRecorridos = Object.keys(datos.rutas[id].recorridos).length;
 
     var distanciaTotal = 0;
@@ -1457,7 +1457,7 @@ var TransQA = (function(){
       duracion = diferenciaTimestamps(0, duracionTotal / numeroRecorridos);
 
       distanciaMedia = floatAString(distanciaTotal / numeroRecorridos, 3) + " km";
-      duracionMedia = `<a title="${ Math.floor(duracionTotal / numeroRecorridos) + " milisegundos"}" class="duracion">${ duracion.horas } horas, ${ duracion.minutos } minutos, ${ duracion.segundos } segundos</a>`;
+      duracionMedia = `<a title="${Math.floor(duracionTotal / numeroRecorridos) + " milisegundos"}" class="duracion">${duracion.horas} horas, ${duracion.minutos} minutos, ${duracion.segundos} segundos</a>`;
       velocidadMedia = floatAString(velocidadTotal / numeroRecorridos, 3) + " km/h";
 
       htmlPrimeraFecha = fechaAString(primeraFechaInicio) + " - " + fechaAString(primeraFechaFin);
@@ -1465,18 +1465,18 @@ var TransQA = (function(){
 
       if ((t = Object.keys(datos.rutas[id].primeraMilla.recorridos).length) > 0) {
         htmlPrimeraMilla =
-        `<ul>
-          <li><strong>Número de recorridos con esta información</strong>: ${ t } de ${ Object.keys(datos.rutas[id].recorridos).length } recorridos</li>
-          <li><strong>Duración media en la primera milla</strong>: <a title="${ Math.floor(datos.rutas[id].primeraMilla._duracionMedia) + " milisegundos"}" class="duracion">${ datos.rutas[id].primeraMilla.duracionMedia.horas } horas, ${ datos.rutas[id].primeraMilla.duracionMedia.minutos } minutos, ${ datos.rutas[id].primeraMilla.duracionMedia.segundos } segundos</a></li>
-          <li><strong>Distancia media recorrida en la primera milla</strong>: ${ floatAString(datos.rutas[id].primeraMilla.distanciaMedia, 3) } km</li>
-          <li><strong>Velocidad media en la primera milla</strong>: ${ floatAString(datos.rutas[id].primeraMilla.velocidadMedia, 3) } km/h</li>
+          `<ul>
+          <li><strong>Número de recorridos con esta información</strong>: ${ t} de ${Object.keys(datos.rutas[id].recorridos).length} recorridos</li>
+          <li><strong>Duración media en la primera milla</strong>: <a title="${ Math.floor(datos.rutas[id].primeraMilla._duracionMedia) + " milisegundos"}" class="duracion">${datos.rutas[id].primeraMilla.duracionMedia.horas} horas, ${datos.rutas[id].primeraMilla.duracionMedia.minutos} minutos, ${datos.rutas[id].primeraMilla.duracionMedia.segundos} segundos</a></li>
+          <li><strong>Distancia media recorrida en la primera milla</strong>: ${ floatAString(datos.rutas[id].primeraMilla.distanciaMedia, 3)} km</li>
+          <li><strong>Velocidad media en la primera milla</strong>: ${ floatAString(datos.rutas[id].primeraMilla.velocidadMedia, 3)} km/h</li>
         </ul>`;
         htmlUltimaMilla =
-        `<ul>
-          <li><strong>Número de recorridos con esta información</strong>: ${ t } de ${ Object.keys(datos.rutas[id].recorridos).length } recorridos</li>
-          <li><strong>Duración media en la última milla</strong>: <a title="${ Math.floor(datos.rutas[id].ultimaMilla._duracionMedia) + " milisegundos"}" class="duracion">${ datos.rutas[id].ultimaMilla.duracionMedia.horas } horas, ${ datos.rutas[id].ultimaMilla.duracionMedia.minutos } minutos, ${ datos.rutas[id].ultimaMilla.duracionMedia.segundos } segundos</a></li>
-          <li><strong>Distancia media recorrida en la última milla</strong>: ${ floatAString(datos.rutas[id].ultimaMilla.distanciaMedia, 3) } km</li>
-          <li><strong>Velocidad media en la última milla</strong>: ${ floatAString(datos.rutas[id].ultimaMilla.velocidadMedia, 3) } km/h</li>
+          `<ul>
+          <li><strong>Número de recorridos con esta información</strong>: ${ t} de ${Object.keys(datos.rutas[id].recorridos).length} recorridos</li>
+          <li><strong>Duración media en la última milla</strong>: <a title="${ Math.floor(datos.rutas[id].ultimaMilla._duracionMedia) + " milisegundos"}" class="duracion">${datos.rutas[id].ultimaMilla.duracionMedia.horas} horas, ${datos.rutas[id].ultimaMilla.duracionMedia.minutos} minutos, ${datos.rutas[id].ultimaMilla.duracionMedia.segundos} segundos</a></li>
+          <li><strong>Distancia media recorrida en la última milla</strong>: ${ floatAString(datos.rutas[id].ultimaMilla.distanciaMedia, 3)} km</li>
+          <li><strong>Velocidad media en la última milla</strong>: ${ floatAString(datos.rutas[id].ultimaMilla.velocidadMedia, 3)} km/h</li>
         </ul>`;
       } else {
         htmlPrimeraMilla = "no disponible aún para esta ruta";
@@ -1485,24 +1485,24 @@ var TransQA = (function(){
 
       if ((t = Object.keys(datos.rutas[id].soloCarril.recorridos).length) > 0) {
         htmlSoloCarril =
-        `<ul>
-          <li><strong>Recorridos completos de la troncal</strong>: ${ t } de ${ Object.keys(datos.rutas[id].recorridos).length } recorridos</li>
-          <li><strong>Datos <em>mixtos</em> de estos ${ t } recorridos</strong>: <ul>
-            <li><strong>Duración media <em>mixta</em></strong>: <a title="${ Math.floor(datos.rutas[id].soloCarril._duracionMediaTotal) } milisegundos" class="duracion">${ datos.rutas[id].soloCarril.duracionMediaTotal.horas + ' horas, ' + datos.rutas[id].soloCarril.duracionMediaTotal.minutos + ' minutos, ' + datos.rutas[id].soloCarril.duracionMediaTotal.segundos } segundos</a></li>
+          `<ul>
+          <li><strong>Recorridos completos de la troncal</strong>: ${ t} de ${Object.keys(datos.rutas[id].recorridos).length} recorridos</li>
+          <li><strong>Datos <em>mixtos</em> de estos ${ t} recorridos</strong>: <ul>
+            <li><strong>Duración media <em>mixta</em></strong>: <a title="${ Math.floor(datos.rutas[id].soloCarril._duracionMediaTotal)} milisegundos" class="duracion">${datos.rutas[id].soloCarril.duracionMediaTotal.horas + ' horas, ' + datos.rutas[id].soloCarril.duracionMediaTotal.minutos + ' minutos, ' + datos.rutas[id].soloCarril.duracionMediaTotal.segundos} segundos</a></li>
             <li><strong>Distancia recorrida media <em>mixta</em></strong>: ${floatAString(datos.rutas[id].soloCarril.distanciaMediaTotal, 3)} km</li>
             <li><strong>Desplazamiento medio <em>mixto</em></strong>: ${floatAString(datos.rutas[id].soloCarril.desplazamientoMedioTotal, 3)} km</li>
-            <li><strong>Velocidad media <em>mixta</em></strong>: ${ floatAString(datos.rutas[id].soloCarril.velocidadMediaTotal, 3) } km/h</li>
+            <li><strong>Velocidad media <em>mixta</em></strong>: ${ floatAString(datos.rutas[id].soloCarril.velocidadMediaTotal, 3)} km/h</li>
           </ul></li>
-          <li><strong>Datos <em>dentro</em> de la troncal de estos ${ t } recorridos</strong>: <ul>
-            <li><strong>Duración media <em>dentro</em> de la troncal</strong>: <a title="${ Math.floor(datos.rutas[id].soloCarril._duracionMediaTroncal) } milisegundos" class="duracion">${ datos.rutas[id].soloCarril.duracionMediaTroncal.horas + ' horas, ' + datos.rutas[id].soloCarril.duracionMediaTroncal.minutos + ' minutos, ' + datos.rutas[id].soloCarril.duracionMediaTroncal.segundos } segundos</a></li>
+          <li><strong>Datos <em>dentro</em> de la troncal de estos ${ t} recorridos</strong>: <ul>
+            <li><strong>Duración media <em>dentro</em> de la troncal</strong>: <a title="${ Math.floor(datos.rutas[id].soloCarril._duracionMediaTroncal)} milisegundos" class="duracion">${datos.rutas[id].soloCarril.duracionMediaTroncal.horas + ' horas, ' + datos.rutas[id].soloCarril.duracionMediaTroncal.minutos + ' minutos, ' + datos.rutas[id].soloCarril.duracionMediaTroncal.segundos} segundos</a></li>
             <li><strong>Distancia recorrida media <em>dentro</em> de la troncal</strong>: ${floatAString(datos.rutas[id].soloCarril.distanciaMediaTroncal, 3)} km</li>
             <li><strong>Desplazamiento medio <em>dentro</em> de la troncal</strong>: ${floatAString(datos.rutas[id].soloCarril.desplazamientoMedioTroncal, 3)} km</li>
-            <li><strong>Velocidad media <em>dentro</em> de la troncal</strong>: ${ floatAString(datos.rutas[id].soloCarril.velocidadMediaTroncal, 3) } km/h</li>
+            <li><strong>Velocidad media <em>dentro</em> de la troncal</strong>: ${ floatAString(datos.rutas[id].soloCarril.velocidadMediaTroncal, 3)} km/h</li>
           </ul></li>
-          <li><strong>Datos <em>afuera</em> de la troncal de estos ${ t } recorridos</strong>: <ul>
-            <li><strong>Duración media <em>afuera</em> de la troncal</strong>: <a title="${ Math.floor(datos.rutas[id].soloCarril._duracionMediaAlimentadora) } milisegundos" class="duracion">${ datos.rutas[id].soloCarril.duracionMediaAlimentadora.horas + ' horas, ' + datos.rutas[id].soloCarril.duracionMediaAlimentadora.minutos + ' minutos, ' + datos.rutas[id].soloCarril.duracionMediaAlimentadora.segundos } segundos</a></li>
+          <li><strong>Datos <em>afuera</em> de la troncal de estos ${ t} recorridos</strong>: <ul>
+            <li><strong>Duración media <em>afuera</em> de la troncal</strong>: <a title="${ Math.floor(datos.rutas[id].soloCarril._duracionMediaAlimentadora)} milisegundos" class="duracion">${datos.rutas[id].soloCarril.duracionMediaAlimentadora.horas + ' horas, ' + datos.rutas[id].soloCarril.duracionMediaAlimentadora.minutos + ' minutos, ' + datos.rutas[id].soloCarril.duracionMediaAlimentadora.segundos} segundos</a></li>
             <li><strong>Distancia recorrida media <em>afuera</em> de la troncal</strong>: ${floatAString(datos.rutas[id].soloCarril.distanciaMediaAlimentadora, 3)} km</li>
-            <li><strong>Velocidad media <em>afuera</em> de la troncal</strong>: ${ floatAString(datos.rutas[id].soloCarril.velocidadMediaAlimentadora, 3) } km/h</li>
+            <li><strong>Velocidad media <em>afuera</em> de la troncal</strong>: ${ floatAString(datos.rutas[id].soloCarril.velocidadMediaAlimentadora, 3)} km/h</li>
           </ul></li>
         </ul>`;
       } else {
@@ -1522,24 +1522,24 @@ var TransQA = (function(){
     }
 
     var htmlDetalles = `<ul>
-      <li><strong>Nombre</strong>: ${ datos.rutas[id].nombre }</li>
-      <li><strong>Número de recorridos</strong>: ${ numeroRecorridos }</li>
-      <li><strong>Distancia media</strong>: ${ distanciaMedia }</li>
-      <li><strong>Duración media</strong>: ${ duracionMedia }</li>
-      <li><strong>Velocidad media</strong>: ${ velocidadMedia } </li>
-      <li><strong>Usuarios</strong>: ${ usuarios.length } </li>
-      <li><strong>Fecha primer recorrido</strong>: ${ htmlPrimeraFecha }</li>
-      <li><strong>Fecha recorrido más reciente</strong>: ${ htmlUltimaFecha }</li>
-      <li><strong>Detalles de primera milla</strong>: ${ htmlPrimeraMilla }</li>
-      <li><strong>Detalles de última milla</strong>: ${ htmlUltimaMilla }</li>
-      <li><strong>Detalles dentro de la troncal</strong>: ${ htmlSoloCarril }</li>
+      <li><strong>Nombre</strong>: ${ datos.rutas[id].nombre}</li>
+      <li><strong>Número de recorridos</strong>: ${ numeroRecorridos}</li>
+      <li><strong>Distancia media</strong>: ${ distanciaMedia}</li>
+      <li><strong>Duración media</strong>: ${ duracionMedia}</li>
+      <li><strong>Velocidad media</strong>: ${ velocidadMedia} </li>
+      <li><strong>Usuarios</strong>: ${ usuarios.length} </li>
+      <li><strong>Fecha primer recorrido</strong>: ${ htmlPrimeraFecha}</li>
+      <li><strong>Fecha recorrido más reciente</strong>: ${ htmlUltimaFecha}</li>
+      <li><strong>Detalles de primera milla</strong>: ${ htmlPrimeraMilla}</li>
+      <li><strong>Detalles de última milla</strong>: ${ htmlUltimaMilla}</li>
+      <li><strong>Detalles dentro de la troncal</strong>: ${ htmlSoloCarril}</li>
     </ul>`;
 
     elementoTituloDetalles.textContent = "Detalles: Ruta";
     elementoDetalles.innerHTML = htmlDetalles;
   };
 
-  var mostrarDetallesTodo = function() {
+  var mostrarDetallesTodo = function () {
     var primeraFechaInicio = null;
     var primeraFechaFin;
     var ultimaFechaInicio = null;
@@ -1579,22 +1579,22 @@ var TransQA = (function(){
 
     var htmlDetalles = `<ul>
       <li><a href="${csv}" download="datos.csv">Descargar CSV</a></li>
-      <li><strong>Número de recorridos</strong>: ${ Object.keys(datos.recorridos).length }</li>
-      <li><strong>Usuarios</strong>: ${ Object.keys(datos.usuarios).length }</li>
-      <li><strong>Rutas</strong>: ${ Object.keys(datos.rutas).length }</li>
-      <li><strong>Fecha primer recorrido</strong>: ${ htmlPrimeraFecha }</li>
-      <li><strong>Fecha recorrido más reciente</strong>: ${ htmlUltimaFecha }</li>
+      <li><strong>Número de recorridos</strong>: ${ Object.keys(datos.recorridos).length}</li>
+      <li><strong>Usuarios</strong>: ${ Object.keys(datos.usuarios).length}</li>
+      <li><strong>Rutas</strong>: ${ Object.keys(datos.rutas).length}</li>
+      <li><strong>Fecha primer recorrido</strong>: ${ htmlPrimeraFecha}</li>
+      <li><strong>Fecha recorrido más reciente</strong>: ${ htmlUltimaFecha}</li>
     </ul>`;
 
     elementoTituloDetalles.textContent = "Detalles: Todo";
     elementoDetalles.innerHTML = htmlDetalles;
   };
 
-  var construirMenu = function() {
+  var construirMenu = function () {
     var i;
 
     elementoTodoTitulo.textContent = "Recorridos (" + Object.keys(datos.recorridos).length + ")";
-    elementoTodo.addEventListener("click", function(e) {
+    elementoTodo.addEventListener("click", function (e) {
       mostrarTodo();
       mostrarDetallesTodo();
 
@@ -1616,7 +1616,7 @@ var TransQA = (function(){
     }
 
     if (elementoNada != null) {
-      elementoNada.addEventListener("click", function(e) {
+      elementoNada.addEventListener("click", function (e) {
         vaciarMapa();
 
         elementoTituloDetalles.textContent = "";
@@ -1627,17 +1627,29 @@ var TransQA = (function(){
     }
   };
 
-  var main = function() {
-    leerDatos();
-    crearMapa();
-    construirMenu();
-    mostrarTodo();
-    mostrarDetallesTodo();
+  var main = function () {
+    var database = firebase.database();
+    database.ref("map").on('value', function (snapshot) {
+      //_JSON = snapshot.val();
+      console.log(snapshot.val());
+      leerDatos(snapshot.val());
+      crearMapa();
+      construirMenu();
+      mostrarTodo();
+      mostrarDetallesTodo();
+    });
+
   };
 
   return {
     "main": main
   };
+  //Pagination
+  var monkeyList = new List('rutas', {
+    valueNames: ['name'],
+    page: 3,
+    pagination: true
+  });
 })();
 
 TransQA.main();
