@@ -1,9 +1,9 @@
 var config = {
-    apiKey: "AIzaSyDMSYFXL4QWvuiecmmcZnBjqtfjGC9KpLE",
-    authDomain: "myapp-39caa.firebaseapp.com",
-    databaseURL: "https://myapp-39caa.firebaseio.com",
-    projectId: "myapp-39caa",
-    storageBucket: "myapp-39caa.appspot.com",
-    messagingSenderId: "501708586890"
+  apiKey: "AIzaSyA9aLeeXFjZu66PWn79BOiNUNEptJlP59E",
+  authDomain: "transqa-app.firebaseapp.com",
+  databaseURL: "https://transqa-app.firebaseio.com",
+  projectId: "transqa-app",
+  storageBucket: "transqa-app.appspot.com",
+  messagingSenderId: "798747767458"
 };
 firebase.initializeApp(config);

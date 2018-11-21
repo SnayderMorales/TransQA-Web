@@ -12,7 +12,7 @@
   </head>
   <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!--nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">TransQA</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -28,20 +28,25 @@
       </li>
     </ul>
   </div>
-</nav>
+</nav-->
 
 <!--Mapa section-->
 <div class="tab-content">
-  <div id="home" class="tab-pane fade in active">
+  <div id="home" class="">
     <div class="row no-gutters">
-      <div id="menu" class="col-4 panel list-group">
-        <h2 class="panel-title"><a id="usuarios-titulo" type="button" href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#usuarioModal">Usuarios modal</a></h2>
+      <div id="menu" class="col-2 panel list-group">
+        <h2 class="panel-title dropright"><a id="usuarios-titulo" type="button" href="#" class="list-group-item list-group-item-action btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Usuarios</a></h2>
+        <div class="dropdown-menu">
+          <div id="usuarios" ></div>
+        </div>
 
 
-        <h2 class="panel-title"><a id="rutas-titulo" type="button" href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#rutaModal">Rutas</a></h2>
-
-        <h2 class="panel-title"><a id="todo-titulo" type="button"  href="#" class="list-group-item list-group-item-action" data-toggle="modal" data-target="#recorridoModal">Recorridos</a></h2>
-
+        <h2 class="panel-title dropright"><a id="rutas-titulo" type="button" href="#" class="list-group-item list-group-item-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rutas</a></h2>
+        <h5 class="modal-title" id="rutaModalLabel">Rutas</h5>
+        <h2 class="panel-title dropright"><a id="todo-titulo" type="button"  href="#" class="list-group-item list-group-item-action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Recorridos</a></h2>
+        <div id="recorridos">
+          <span id="todo" class="panel-title panel-subtitle"><a href="#" class="list-group-item list-group-item-action">Todo</a></span>
+        </div>
         <!--<h2 id="nada" class="panel-title"><a href="#" class="list-group-item list-group-item-action">Limpiar Mapa</a></h2>-->
 
         <!--Usuario Modal -->
@@ -104,6 +109,13 @@
       <div class="col-8">
         <div class="content">
           <div id="mapa"></div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div id="detalles-contenedor">
+          <h2 id="detalles-titulo">Detalles</h2>
+          <div id="detalles"></div>
         </div>
       </div>
     </div>
