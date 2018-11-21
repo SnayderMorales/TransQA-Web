@@ -1629,8 +1629,8 @@ var TransQA = (function () {
 
   var main = function () {
     var database = firebase.database();
-    database.ref("map").on('value', function (snapshot) {
-      //_JSON = snapshot.val();
+    var database = firebase.database();
+    database.ref("/").on('value', function (snapshot) {
       console.log(snapshot.val());
       leerDatos(snapshot.val());
       crearMapa();
