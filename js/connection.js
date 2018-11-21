@@ -7,3 +7,4 @@ var config = {
     messagingSenderId: "798747767458"
 };
 firebase.initializeApp(config);
+//document ignored
