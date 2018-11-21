@@ -1630,7 +1630,6 @@ var TransQA = (function () {
   var main = function () {
     var database = firebase.database();
     database.ref("/").on('value', function (snapshot) {
-      //_JSON = snapshot.val();
       console.log(snapshot.val());
       leerDatos(snapshot.val());
       crearMapa();
