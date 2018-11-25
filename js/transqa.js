@@ -1629,19 +1629,6 @@ var TransQA = (function () {
 
   var main = function () {
 
-    var ref=firebase.database().ref("/");
-console.log("In getData, looking for ",ref);
-
-// get support data from firebase
-ref.on('value',function (snapshot) {
-    console.log("In Value");
-    console.log(snapshot);
-}, function(error) {
-    console.error(error);
-});
-
-console.log("end getData, looking for ",ref);
-
     var database = firebase.database();
 
     database.ref('/').on('value', function (snapshot) {
