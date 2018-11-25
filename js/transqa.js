@@ -1628,8 +1628,23 @@ var TransQA = (function () {
   };
 
   var main = function () {
+
+    var ref=firebase.database().ref("/");
+console.log("In getData, looking for ",ref);
+
+// get support data from firebase
+ref.on('value',function (snapshot) {
+    console.log("In Value");
+    console.log(snapshot);
+}, function(error) {
+    console.error(error);
+});
+
+console.log("end getData, looking for ",ref);
+
     var database = firebase.database();
-    database.ref("/").on('value', function (snapshot) {
+
+    database.ref('/').on('value', function (snapshot) {
       console.log(snapshot.val());
       leerDatos(snapshot.val());
       crearMapa();
@@ -1643,12 +1658,7 @@ var TransQA = (function () {
   return {
     "main": main
   };
-  //Pagination
-  var monkeyList = new List('rutas', {
-    valueNames: ['name'],
-    page: 3,
-    pagination: true
-  });
+
 })();
 
 TransQA.main();

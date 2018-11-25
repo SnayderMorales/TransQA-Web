@@ -23,7 +23,7 @@ h1 {
 }
 
 #menu .panel-title a {
-  background-color: #f8f9fa!important;
+  background-color: #f8f9fa !important;
 }
 
 #menu .panel-subtitle {
@@ -80,12 +80,33 @@ a.duracion, a.duracion:hover, a.duracion:active, a.duracion:visited, .respuesta-
 }
 
 .nav-tabs {
-    border-bottom: 0px solid #ddd;
+  border-bottom: 0px solid #ddd;
 }
 
 .center-content {
   display: flex;
   justify-content: center;
+}
+
+.btn-list {
+  width: 100%;
+  background-color: #f8f9fa;
+  color: #495057;
+}
+
+.btn-list:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  color: #495057 !important;
+}
+
+.btn-list:focus {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  color: #495057 !important;
+}
+
+.dropdown-menu {
+  overflow-y: scroll;
+  max-height: 200px;
 }
 
 .respuesta-si {
@@ -96,22 +117,12 @@ a.duracion, a.duracion:hover, a.duracion:active, a.duracion:visited, .respuesta-
   /*color: #ff0000;*/
 }
 
-.respuesta-1-de-5 {
+.respuesta-1-de-5 {}
 
-}
+.respuesta-2-de-5 {}
 
-.respuesta-2-de-5 {
+.respuesta-3-de-5 {}
 
-}
+.respuesta-4-de-5 {}
 
-.respuesta-3-de-5 {
-
-}
-
-.respuesta-4-de-5 {
-
-}
-
-.respuesta-5-de-5 {
-
-}
+.respuesta-5-de-5 {}
