@@ -44,7 +44,7 @@ h1 {
 }
 
 #detalles {
-  margin-top: 2em;
+  margin-top: 0;
   text-align: left;
 }
 
@@ -107,6 +107,18 @@ a.duracion, a.duracion:hover, a.duracion:active, a.duracion:visited, .respuesta-
 .dropdown-menu {
   overflow-y: scroll;
   max-height: 200px;
+}
+
+.detalle-contenendor {
+  padding: 5px !important;
+  text-align: left !important;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 .respuesta-si {
