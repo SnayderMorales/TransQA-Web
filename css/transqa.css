@@ -120,6 +120,18 @@ ul {
   list-style-type: none;
   padding: 0;
 }
+.capa{
+  background: yellow;
+  height: 150px;
+  /*IMPORTANTE*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.subcapa{
+  width: 500px;
+  background: red;
+}
 
 .respuesta-si {
   /*color: #00ff00;*/
