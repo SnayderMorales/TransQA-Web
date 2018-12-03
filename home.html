@@ -18,26 +18,60 @@
   </div>
 
   <!--Mapa section-->
+
   <div id="home-section" class="tab-content" style="display: none">
     <div id="home" class="">
       <div class="row no-gutters">
         <div id="menu" class="col-2 panel list-group">
-          <div id="menu" class="col-12 panel list-group padding">
-            <button id="usuarios-titulo" type="button" class="btn btn-secondary dropdown-toggle btn-list" data-toggle="collapse" data-target="#usuarios" data-parent="#menu">
-              Usuarios
-            </button>
-            <div id="usuarios" class="panel collapse list-menu"></div>
-            <button id="rutas-titulo" type="button" class="btn btn-secondary dropdown-toggle btn-list" href="#" class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#rutas" data-parent="#menu">
-              Rutas
-            </button>
-            <div id="rutas" class="panel collapse list-menu"></div>
-            <button id="todo-titulo" type="button" class="btn btn-secondary dropdown-toggle btn-list" data-toggle="collapse" data-target="#recorridos" data-parent="#menu">
-              Recorridos
-            </button>
-            <div id="recorridos" class="panel collapse list-menu">
-              <span id="todo" class="panel-title panel-subtitle"><a href="#" class="list-group-item list-group-item-action">Todo</a></span>
+
+
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                  <button id="usuarios-titulo" class="btn dropdown-toggle btn-list collapsed" data-toggle="collapse" data-target="#usuarios" aria-expanded="false" aria-controls="rutas">
+                    Usuarios
+                  </button>
+                </h5>
+              </div>
+
+              <div id="usuarios" class="collapse list-menu" aria-labelledby="headingOne" data-parent="#accordion">
+
+              </div>
             </div>
-            <!--<h2 id="nada" class="panel-title"><a href="#" class="list-group-item list-group-item-action">Limpiar Mapa</a></h2>-->
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <button id="rutas-titulo" class="btn dropdown-toggle btn-list collapsed" data-toggle="collapse" data-target="#rutas" aria-expanded="false" aria-controls="rutas">
+                  Rutas
+                </button>
+              </div>
+              <div id="rutas" class="collapse list-menu" aria-labelledby="headingTwo" data-parent="#accordion">
+
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  <button id="todo-titulo" class="btn dropdown-toggle btn-list collapsed" data-toggle="collapse" data-target="#recorridos" aria-expanded="false" aria-controls="collapseThree">
+                    Recorridos
+                  </button>
+                </h5>
+              </div>
+              <div id="recorridos" class="collapse list-menu" aria-labelledby="headingThree" data-parent="#accordion">
+
+                <span id="todo" class="panel-title panel-subtitle"><a href="#" class="list-group-item list-group-item-action">Todo</a></span>
+              </div>
+              <h6 id="nada" class="panel-title"><a href="#" class="list-group-item list-group-item-action">Limpiar Mapa</a></h6>
+            </div>
+          </div>
+          <div id="navegacion-fija"  style="display: none">
+                <button id="botonlogout" class="btn btn-outline-primary">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <!i class='fab fa-500px' style='font-size:24px'>
+                </button>
+
+              <!--li><a href="#mapa">🌐</a></li>
+              <li><a href="#detalles-titulo">🗎</a></li-->
           </div>
         </div>
         <!--<h2 id="nada" class="panel-title"><a href="#" class="list-group-item list-group-item-action">Limpiar Mapa</a></h2>-->
@@ -71,21 +105,18 @@
       </div>
     </div>
   </div>
-
-  <div id="navegacion-fija" style="display: none">
-    <ul>
-      <li><button id="botonlogout" class="btn btn-outline-primary">
-          <i class="fas fa-sign-out-alt"></i>
-          <!i class='fab fa-500px' style='font-size:24px'>
-        </button></li>
-      <li><a href="#mapa">🌐</a></li>
-      <li><a href="#detalles-titulo">🗎</a></li>
-    </ul>
-
-
-
-
-  </div>
+<!--
+<div class="" style="height: 100%; position:absolute;">
+  <ul>
+    <li><button id="botonlogout" class="btn btn-outline-primary">
+        <i class="fas fa-sign-out-alt"></i>
+        <!i class='fab fa-500px' style='font-size:24px'>
+      </button></li>
+    <li><a href="#mapa">🌐</a></li>
+    <li><a href="#detalles-titulo">🗎</a></li>
+  </ul>
+</div>
+-->
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
