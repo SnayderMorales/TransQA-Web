@@ -164,6 +164,7 @@ var TransQA = (function () {
   };
 
   var mostrarRecorrido = function (id, limpiarMapa, color) {
+
     var recorrido = datos.recorridos[id];
     var coordenadas;
     var polyline;
@@ -987,6 +988,8 @@ var TransQA = (function () {
     var elemento = document.createElement('a');
 
     elemento.href = "#";
+    elemento.id = id.substr(1);
+    elemento.setAttribute('onclick','active("'+id.substr(1)+'")');
     elemento.className = "list-group-item list-group-item-action";
     elemento.innerHTML = "";
 
@@ -1632,20 +1635,21 @@ var TransQA = (function () {
   var main = function () {
 
     var database = firebase.database();
-    
+
 
 
     authService.onAuthStateChanged(function (user) {
       if (user) {
         database.ref('/').on('value', function (snapshot) {
-          console.log(snapshot.val());
           leerDatos(snapshot.val());
           crearMapa();
           construirMenu();
           mostrarTodo();
           mostrarDetallesTodo();
+          $('#loader-page').hide();
+          $('#home-section').show();
+          $('#navegacion-fija').show();
         });
-        console.log('AuthStateChanged', user);
 
       } else {
         console.log('AuthStateChanged any')
@@ -1664,6 +1668,5 @@ var TransQA = (function () {
 TransQA.main();
 document.getElementById('botonlogout').addEventListener('click', function () {
   authService.signOut();
-  location.href ="login.html";
+  location.href ="index.html";
 })
-
