@@ -1651,6 +1651,7 @@ var TransQA = (function () {
           $('#home-section').show();
           $('#navegacion-fija').show();
         }, (error) => {
+          alert('Este Usuario No Cuenta con Permisos De Administrador!');
           authService.signOut();
           location.href = "index.html";
         });
