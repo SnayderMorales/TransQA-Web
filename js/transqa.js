@@ -989,7 +989,7 @@ var TransQA = (function () {
 
     elemento.href = "#";
     elemento.id = id.substr(1);
-    elemento.setAttribute('onclick','active("'+id.substr(1)+'")');
+    elemento.setAttribute('onclick', 'active("' + id.substr(1) + '")');
     elemento.className = "list-group-item list-group-item-action";
     elemento.innerHTML = "";
 
@@ -1640,6 +1640,7 @@ var TransQA = (function () {
 
     authService.onAuthStateChanged(function (user) {
       if (user) {
+        console.log(user);
         database.ref('/').on('value', function (snapshot) {
           leerDatos(snapshot.val());
           crearMapa();
@@ -1649,6 +1650,9 @@ var TransQA = (function () {
           $('#loader-page').hide();
           $('#home-section').show();
           $('#navegacion-fija').show();
+        }, (error) => {
+          authService.signOut();
+          location.href = "index.html";
         });
 
       } else {
@@ -1668,5 +1672,5 @@ var TransQA = (function () {
 TransQA.main();
 document.getElementById('botonlogout').addEventListener('click', function () {
   authService.signOut();
-  location.href ="index.html";
+  location.href = "index.html";
 })
