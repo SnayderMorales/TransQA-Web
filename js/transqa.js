@@ -577,7 +577,7 @@ var TransQA = (function () {
     recorrido.soloCarril = soloCarril;
   };
 
-  var filtrarRecorrido = function (idRecorrido, recorridoJSON) {
+  var filtrarRecorrido = function (idRecorrido, recorridoJSON, FILTRO_BLACKLIST) {
     var tempFecha;
 
     if (recorridoJSON.puntos === undefined || recorridoJSON.puntos.length == 0) {
@@ -601,7 +601,7 @@ var TransQA = (function () {
     } else if (FILTRO_WHITELIST_DIAS_DE_SEMANA.indexOf((tempFecha = new Date(recorridoJSON.fechaInicio)).getDay()) == -1) {
       // Ignorando recorridos en días de semana que no estén en el whitelist.
       return false;
-    } else if (FILTRO_BLACKLIST_RECORRIDOS.indexOf(idRecorrido) >= 0) {
+    } else if (FILTRO_BLACKLIST.indexOf(idRecorrido) >= 0) {
       // Ignorando recorridos en blacklist de recorridos individuales
       return false;
     }
@@ -610,7 +610,7 @@ var TransQA = (function () {
     return true;
   };
 
-  var leerDatos = function (_JSON) {
+  var leerDatos = function (_JSON, FILTRO_BLACKLIST) {
     var j; // ID usuario de Google. _JSON[j] = Listado de recorridos de usuario.
     var k; // ID de recorrido. _JSON[j][k] = Recorrido individual de un usuario.
     var l; // Índice de coordenada. _JSON[j][k].puntos[l] es una coordenada.
@@ -642,7 +642,7 @@ var TransQA = (function () {
       if (_JSON.hasOwnProperty(j)) {
         for (k in _JSON[j]) {
           if (_JSON[j].hasOwnProperty(k)) {
-            if (!filtrarRecorrido(k, _JSON[j][k])) {
+            if (!filtrarRecorrido(k, _JSON[j][k], FILTRO_BLACKLIST)) {
               // Se ignora todo recorrido que no pase el filtro de recorridos.
               continue;
             }
@@ -1637,19 +1637,22 @@ var TransQA = (function () {
     var database = firebase.database();
 
 
-
+    var FILTRO_BLACKLIST1 = [];
     authService.onAuthStateChanged(function (user) {
+      
       if (user) {
         console.log(user);
+        
         database.ref('/').on('value', function (snapshot) {
-          leerDatos(snapshot.val());
-          crearMapa();
-          construirMenu();
-          mostrarTodo();
-          mostrarDetallesTodo();
-          $('#loader-page').hide();
-          $('#home-section').show();
-          $('#navegacion-fija').show();
+          for (var item in snapshot.val()) {
+            var database2 = firebase.database();
+            database2.ref('/' + item).on('value', function (snapshot2) {
+              for (var item in snapshot2.val()) {
+                FILTRO_BLACKLIST1.push(item);
+              }
+            });
+          }
+          
         }, (error) => {
           alert('Este Usuario No Cuenta con Permisos De Administrador!');
           authService.signOut();
@@ -1659,6 +1662,16 @@ var TransQA = (function () {
       } else {
         console.log('AuthStateChanged any')
       }
+    });
+    database.ref('/').on('value', (snapshot3) => {
+      leerDatos(snapshot3.val(), FILTRO_BLACKLIST1);
+      crearMapa();
+      construirMenu();
+      mostrarTodo();
+      mostrarDetallesTodo();
+      $('#loader-page').hide();
+      $('#home-section').show();
+      $('#navegacion-fija').show();
     });
 
 
